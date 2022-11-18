@@ -1,4 +1,3 @@
-
 const all_customers = document.getElementById('all_customers')
 
 
@@ -52,13 +51,30 @@ fetch('../data.json')
 	const add_customer = document.getElementById('add-customer')
 	const clos = document.getElementById('close')
 	const add = document.getElementById('add')
+	const add_money = document.getElementById('add-money')
+	const addMoney = document.getElementById('addMoney')
+	const close_add_money = document.getElementById('close_add_money')
+	
+	
 	
 
-	
 
 	create_new_account.addEventListener('click',()=>{
 		add_customer.style.display = 'block';
+		add_money.style.display = 'none';
 
+	})
+
+	addMoney.addEventListener('click',()=>{
+		add_money.style.display = 'block';
+		add_customer.style.display = 'none';
+	
+
+	})
+
+	close_add_money.addEventListener('click',()=>{
+		add_money.style.display = 'none';
+	
 	})
 
 	clos.addEventListener('click',()=>{
@@ -79,10 +95,38 @@ fetch('../data.json')
 				"content-type":"application/json"
 			},
 			body: JSON.stringify({
-				firstNameValue:firstNameValue.value,
-				lastNameValue:lastNameValue.value
+				id:Date.now(),
+				firstName:firstNameValue.value,
+				lastName:lastNameValue.value,
+				balance: 0
 			})
 				
 		})
 		
 	})
+
+	let id_customer_for_add_money = document.getElementById('id_customer_for_add_money'),
+	sumOfMoney = document.getElementById('sumOfMoney'),
+	add_money_button = document.getElementById('add_money')
+
+
+	add_money_button.addEventListener('click',()=>{
+		fetch('/',{
+			method: 'PUT',
+			headers:{
+				"content-type":"application/json"
+			},
+			body: JSON.stringify({
+				
+				sumOfMoney:sumOfMoney.value,
+				id_customer_for_add_money:id_customer_for_add_money.value,
+			
+			})
+				
+		})
+		window.location.reload()
+	})
+	
+
+
+

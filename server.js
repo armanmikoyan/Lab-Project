@@ -1,10 +1,12 @@
-const express = require('express')
-const fs = require('fs')
-const path = require('path')
+
+import express from 'express'
+import path from 'path'
+import fs from "fs"
 
 
 
 const app = express()
+
 
 
 app.listen(3000,(err)=>{
@@ -26,16 +28,26 @@ app.get('/',(req,res)=>{
 
 
 app.post('/',(req,res)=>{
-const id = 	Date.now()
-const newCustomer ={
-	id,
-	...req.body
-}
 const data = fs.readFileSync(path.resolve("Front/data.json"),'utf8')
 let arr = JSON.parse(data)
-arr.push( JSON.stringify(req.body))
-
-fs.writeFileSync(path.resolve("Front/data.json"),data +JSON.parse(arr))
+arr.push( req.body)
+fs.writeFileSync(path.resolve("Front/data.json"),JSON.stringify(arr))
 
 })
 
+
+
+
+app.put('/',(req,res)=>{
+	const data = fs.readFileSync(path.resolve("Front/data.json"),'utf8')
+	let arr = JSON.parse(data)
+	for(let elem of arr){
+		if(String(elem.id) === String(req.body.id_customer_for_add_money)){
+			elem.balance +=1 + +req.body.sumOfMoney
+			console.log(elem.balance)
+
+		}
+	}	
+	fs.writeFileSync(path.resolve("Front/data.json"),JSON.stringify(arr))
+	res.send(arr)
+	})
