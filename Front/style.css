@@ -274,3 +274,25 @@ label{
 	margin: 0 auto;
 }
 
+
+
+
+
+  @media screen and (max-width: 1400px) {
+	.all_customers{
+		display: grid;
+		grid-template-columns: 1fr ;
+		gap: 50px;
+	
+	}
+  }
+
+  @media screen and (max-width: 800px) {
+	.customer{
+	
+		padding: 10px 0px;
+		font-size: 13px;
+	
+	
+	}
+  }
