@@ -51,3 +51,39 @@ app.put('/',(req,res)=>{
 	fs.writeFileSync(path.resolve("Front/data.json"),JSON.stringify(arr))
 	res.send(arr)
 	})
+
+
+	app.put('/transfer.html',(req,res)=>{
+		const data = fs.readFileSync(path.resolve("Front/data.json"),'utf8')
+		let arr = JSON.parse(data)
+		for(let elem of arr){
+			if(String(elem.id) === String(req.body.money_from_id)){
+				elem.balance =+elem.balance - +req.body.sumOfTransferMoney
+				console.log(elem)
+			}
+			if(String(elem.id)  === String(req.body.money_to_id)){
+				elem.balance =+elem.balance + +req.body.sumOfTransferMoney
+				console.log(elem)
+			}
+		}	
+		
+		fs.writeFileSync(path.resolve("Front/data.json"),JSON.stringify(arr))
+		res.redirect('/')
+		})
+
+
+
+
+		app.delete('/delete.html',(req,res)=>{
+			const data = fs.readFileSync(path.resolve("Front/data.json"),'utf8')
+			let arr = JSON.parse(data)
+				let sortedArr = arr.filter((elem)=>{
+					console.log(elem.id,req.body.delete_account_id)
+						return String(elem.id) !== req.body.delete_account_id
+						
+						
+					})
+			
+			fs.writeFileSync(path.resolve("Front/data.json"),JSON.stringify(sortedArr))
+			res.redirect('/')
+			})
